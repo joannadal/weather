@@ -1,0 +1,20 @@
+@font-face {
+    font-family: SanFranciscoTextBold;
+    src: url(SanFranciscoTextBold.ttf);
+}
+@font-face {
+    font-family: SanFranciscoTextHeavy;
+    src: url(SanFranciscoTextHeavy.ttf);
+}
+@font-face {
+    font-family: SanFranciscoTextMedium;
+    src: url(SanFranciscoTextMedium.ttf);
+}
+@font-face {
+    font-family: SanFranciscoTextRegular;
+    src: url(SanFranciscoTextRegular.ttf);
+}
+@font-face {
+    font-family: SanFranciscoTextThin;
+    src: url(SanFranciscoTextThin.ttf);
+}
