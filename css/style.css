@@ -5,3 +5,7 @@ body {
 .title {
     font-family: SanFranciscoTextHeavy;
 }
+
+.weather-icon {
+    margin: auto;
+}

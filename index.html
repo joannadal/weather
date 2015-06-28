@@ -20,7 +20,13 @@
         </div>
 
         <div class="content" ng-controller="WeatherController">
-
+            <div class="col-md-12 text-center">
+                <div class="col-md-12 text-center">
+                    <h3>{{ city }}</h3>
+                    <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon">
+                </div>
+                <button class="btn btn-primary" id=getByLocation" ng-click="getByLocation()">By Location</button>
+            </div>
         </div>
 
         <script src="js/weather.js"></script>
