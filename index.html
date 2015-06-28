@@ -22,14 +22,32 @@
         <div class="content" ng-controller="WeatherController">
             <div class="col-md-12 text-center">
                 <div class="col-md-12 text-center">
+                    <div class="col-md-2 col-md-offset-5">
+                        <select class="form-control" id="metricSelection">
+                            <option value="metric">ºC</option>
+                            <option value="imperial">ºF</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
                     <h3>{{ city }}</h3>
                     <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon">
+                    <h5>{{ degrees }}</h5>
                 </div>
                 <button class="btn btn-primary" id=getByLocation" ng-click="getByLocation()">By Location</button>
             </div>
         </div>
 
         <script src="js/weather.js"></script>
+
+        <script>
+            $( document ).ready(function() {
+                //Set metric values
+                $('#metricSelection').on('change', function() {
+                    angular.element(this).scope().setUnit(this.value);
+                });
+            });
+        </script>
 
     </body>
 
