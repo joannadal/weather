@@ -21,7 +21,7 @@
 
         <div class="content" ng-controller="WeatherController">
             <div class="col-md-12 text-center">
-                <div class="col-md-12 text-center">
+                <div class="col-md-12 text-center m-bottom">
                     <div class="col-md-2 col-md-offset-5">
                         <select class="form-control" id="metricSelection">
                             <option value="metric">ºC</option>
@@ -29,7 +29,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-12 text-center">
+                <div class="col-md-12 m-bottom">
+                    <input class="typeahead" type="text" placeholder="Select a city">
+                </div>
+                <div class="col-md-12 text-center m-bottom">
                     <h3>{{ city }}</h3>
                     <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon">
                     <h5>{{ degrees }}</h5>
@@ -39,12 +42,20 @@
         </div>
 
         <script src="js/weather.js"></script>
+        <script src="js/typeahead.js/bloodhound.min.js"></script>
+        <script src="js/typeahead.js/typeahead.bundle.min.js"></script>
+        <script src="js/typeahead.js/typeahead.jquery.min.js"></script>
 
         <script>
             $( document ).ready(function() {
                 //Set metric values
                 $('#metricSelection').on('change', function() {
                     angular.element(this).scope().setUnit(this.value);
+                });
+
+                $('.typeahead').typeahead({
+                    minLength: 3,
+                    highlight: true
                 });
             });
         </script>

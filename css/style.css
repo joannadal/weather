@@ -9,3 +9,27 @@ body {
 .weather-icon {
     margin: auto;
 }
+
+.m-bottom {
+    margin-bottom: 10px;
+}
+
+/* TYPEAHEAD */
+.typeahead, .tt-query, .tt-hint {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 24px;
+    height: 30px;
+    line-height: 30px;
+    outline: medium none;
+    padding: 8px 12px;
+    width: 396px;
+    height: 45px;
+}
+.typeahead {
+    background-color: #fff;
+}
+.typeahead:focus {
+    border: 2px solid #0097cf;
+}
+/* END TYPEAHEAD */
