@@ -48,5 +48,10 @@ angular.module("Weather", []).controller("WeatherController",
                 alert("Geolocation is not supported by this browser.");
             }
         };
+
+        $scope.getByCityID = function (cityID) {
+            url = 'http://api.openweathermap.org/data/2.5/weather?id=' + String(cityID);
+            $scope.getData(url);
+        }
     }
 );

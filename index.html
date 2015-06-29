@@ -12,6 +12,11 @@
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+        <!-- Typeahead plugin -->
+        <script src="js/typeahead.js/bloodhound.min.js"></script>
+        <script src="js/typeahead.js/typeahead.bundle.min.js"></script>
+        <script src="js/typeahead.js/typeahead.jquery.min.js"></script>
+
     </head>
     <body>
 
@@ -30,32 +35,62 @@
                     </div>
                 </div>
                 <div class="col-md-12 m-bottom">
-                    <input class="typeahead" type="text" placeholder="Select a city">
+                    <input class="typeahead" id="typeaheadCities" type="text" placeholder="Select a city">
                 </div>
                 <div class="col-md-12 text-center m-bottom">
                     <h3>{{ city }}</h3>
                     <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon">
                     <h5>{{ degrees }}</h5>
                 </div>
-                <button class="btn btn-primary" id=getByLocation" ng-click="getByLocation()">By Location</button>
+                <button class="btn btn-primary" id="getByLocation" ng-click="getByLocation()">By Location</button>
             </div>
         </div>
 
         <script src="js/weather.js"></script>
-        <script src="js/typeahead.js/bloodhound.min.js"></script>
-        <script src="js/typeahead.js/typeahead.bundle.min.js"></script>
-        <script src="js/typeahead.js/typeahead.jquery.min.js"></script>
 
-        <script>
+        <script type="text/javascript">
             $( document ).ready(function() {
                 //Set metric values
                 $('#metricSelection').on('change', function() {
                     angular.element(this).scope().setUnit(this.value);
                 });
 
+                var cities = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    prefetch: '',
+                    remote: {
+                        url: 'http://api.openweathermap.org/data/2.5/weather?q=%QUERY',
+                        wildcard: '%QUERY',
+                        filter: function (cities) {
+                            // Map the remote source JSON array to a JavaScript object array
+                            return $.map([cities], function (city) {
+                                return {
+                                    name: city.name,
+                                    country: city.sys.country,
+                                    id: city.id
+                                };
+                            });
+                        }
+                    }
+                });
+
                 $('.typeahead').typeahead({
-                    minLength: 3,
-                    highlight: true
+                    hint: true,
+                    highlight: true,
+                    minLength: 3
+                },
+                {
+                    name: 'cities',
+                    display: 'name',
+                    source: cities.ttAdapter(),
+                    templates: {
+                        suggestion: function (data) {
+                            return '<p><strong>' + data.name + '</strong> - ' + data.country + '</p>';
+                        }
+                    }
+                }).bind("typeahead:selected", function(obj, datum) {
+                    angular.element(this).scope().getByCityID(datum.id);
                 });
             });
         </script>
