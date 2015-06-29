@@ -9,6 +9,7 @@ angular.module("Weather", []).controller("WeatherController",
         $scope.unit = 'metric'
         $scope.degrees = null;
         $scope.city = '';
+        $scope.country = '';
         $scope.weatherIconUrl = '';
 
         $scope.getData = function (url) {
@@ -16,6 +17,7 @@ angular.module("Weather", []).controller("WeatherController",
             success(function(data, status, headers, config) {
                 //Actions when get the Weather data
                 $scope.city = data.name;
+                $scope.country = data.sys.country;
                 $scope.degrees = data.main.temp;
                 $scope.setWeatherIconUrl(data.weather[0].icon);
             }).

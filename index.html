@@ -38,7 +38,7 @@
                     <input class="typeahead" id="typeaheadCities" type="text" placeholder="Select a city">
                 </div>
                 <div class="col-md-12 text-center m-bottom">
-                    <h3>{{ city }}</h3>
+                    <h3>{{ city }} - {{ country }}</h3>
                     <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon">
                     <h5>{{ degrees }}</h5>
                 </div>
@@ -60,11 +60,11 @@
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     prefetch: '',
                     remote: {
-                        url: 'http://api.openweathermap.org/data/2.5/weather?q=%QUERY',
+                        url: 'http://api.openweathermap.org/data/2.5/find?q=%QUERY',
                         wildcard: '%QUERY',
                         filter: function (cities) {
                             // Map the remote source JSON array to a JavaScript object array
-                            return $.map([cities], function (city) {
+                            return $.map(cities.list, function (city) {
                                 return {
                                     name: city.name,
                                     country: city.sys.country,
