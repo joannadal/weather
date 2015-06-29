@@ -28,13 +28,13 @@ angular.module("Weather", []).controller("WeatherController",
 
         $scope.setUnit = function (unit) {
             $scope.unit = unit;
-        }
+        };
 
         $scope.setWeatherIconUrl = function (code) {
             if (code) {
                 $scope.weatherIconUrl = 'http://openweathermap.org/img/w/' + code + '.png';
             }
-        }
+        };
 
         $scope.setLocation = function (location) {
             $scope.latitude = location.coords.latitude;
@@ -42,6 +42,7 @@ angular.module("Weather", []).controller("WeatherController",
             url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + String($scope.latitude) + '&lon=' + String($scope.longitude);
             $scope.getData(url);
         };
+
         $scope.getByLocation = function (latitude, longitude) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition($scope.setLocation);
@@ -54,6 +55,6 @@ angular.module("Weather", []).controller("WeatherController",
         $scope.getByCityID = function (cityID) {
             url = 'http://api.openweathermap.org/data/2.5/weather?id=' + String(cityID);
             $scope.getData(url);
-        }
+        };
     }
 );
