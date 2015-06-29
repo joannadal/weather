@@ -55,10 +55,10 @@
                     angular.element(this).scope().setUnit(this.value);
                 });
 
+                //Function to search cities by name
                 var cities = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    prefetch: '',
                     remote: {
                         url: 'http://api.openweathermap.org/data/2.5/find?q=%QUERY',
                         wildcard: '%QUERY',
@@ -74,8 +74,7 @@
                         }
                     }
                 });
-
-                $('.typeahead').typeahead({
+                $('#typeaheadCities').typeahead({
                     hint: true,
                     highlight: true,
                     minLength: 3
