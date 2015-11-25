@@ -1,6 +1,6 @@
 angular.module("Weather", []).controller("WeatherController",
     function WeatherController($scope, $http) {
-        $scope.APIkey = '2d94e0fd44b2ab607ff950cd8d6a89b8';
+        $scope.APIkey = '1884739a657593032d171d174a7f40ef';
 
         $scope.latitude = '';
         $scope.longitude = '';
@@ -12,6 +12,8 @@ angular.module("Weather", []).controller("WeatherController",
         $scope.country = '';
         $scope.weatherIconUrl = '';
 
+        $scope.forecast = [];
+
         $scope.getData = function (url) {
             $http.get(url + '&units=' + $scope.unit + '&APPID=' + $scope.APIkey).
             success(function(data, status, headers, config) {
@@ -19,10 +21,20 @@ angular.module("Weather", []).controller("WeatherController",
                 $scope.city = data.name;
                 $scope.country = data.sys.country;
                 $scope.degrees = data.main.temp;
-                $scope.setWeatherIconUrl(data.weather[0].icon);
+                $scope.weatherIconUrl = $scope.getWeatherIconUrl(data.weather[0].icon);
             }).
             error(function(data, status, headers, config) {
                 alert("There was an error getting the Weather data.");
+            });
+        };
+
+        $scope.getDataForecast = function (url) {
+            $http.get(url + '&units=' + $scope.unit + '&APPID=' + $scope.APIkey).
+            success(function(data, status, headers, config) {
+                $scope.forecast = data.list.slice(0, 6);;
+            }).
+            error(function(data, status, headers, config) {
+                alert("There was an error getting the Weather forecast data.");
             });
         };
 
@@ -30,9 +42,12 @@ angular.module("Weather", []).controller("WeatherController",
             $scope.unit = unit;
         };
 
-        $scope.setWeatherIconUrl = function (code) {
+        $scope.getWeatherIconUrl = function (code) {
             if (code) {
-                $scope.weatherIconUrl = 'http://openweathermap.org/img/w/' + code + '.png';
+                return 'http://openweathermap.org/img/w/' + code + '.png';
+            }
+            else {
+                return '';
             }
         };
 
@@ -54,7 +69,9 @@ angular.module("Weather", []).controller("WeatherController",
 
         $scope.getByCityID = function (cityID) {
             url = 'http://api.openweathermap.org/data/2.5/weather?id=' + String(cityID);
+            urlForecast = 'http://api.openweathermap.org/data/2.5/forecast/daily?id=' + String(cityID);
             $scope.getData(url);
+            $scope.getDataForecast(urlForecast);
         };
     }
 );

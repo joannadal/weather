@@ -39,8 +39,17 @@
                 </div>
                 <div class="col-md-12 text-center m-bottom">
                     <h3>{{ city }} - {{ country }}</h3>
-                    <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon">
-                    <h5>{{ degrees }}</h5>
+                    <h2>Now</h2>
+                    <img class="weather-icon" src="{{ weatherIconUrl }}" alt="Weather Icon"/>
+                    <h5>{{ degrees }} {{ unit }}</h5>
+                </div>
+                <div class="col-md-12 text-center m-bottom">
+                    <h2>Forecast</h2>
+                    <div class="col-md-2" ng-repeat="day in forecast">
+                        <h3>{{ day.dt * 1000 | date:"EEE, dd-MM-yy" }}</h3>
+                        <img ng-src="http://openweathermap.org/img/w/{{ day.weather[0].icon }}.png" class="weather-icon" alt="Weather Icon"/>
+                        <h5>{{ day.temp.day }} {{ unit }}</h5>
+                    </div>
                 </div>
                 <button class="btn btn-primary" id="getByLocation" ng-click="getByLocation()">By Location</button>
             </div>
@@ -56,11 +65,12 @@
                 });
 
                 //Function to search cities by name
+                var APIkey = '1884739a657593032d171d174a7f40ef';
                 var cities = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     remote: {
-                        url: 'http://api.openweathermap.org/data/2.5/find?q=%QUERY',
+                        url: 'http://api.openweathermap.org/data/2.5/find?q=%QUERY&APPID=' + APIkey,
                         wildcard: '%QUERY',
                         filter: function (cities) {
                             // Map the remote source JSON array to a JavaScript object array
